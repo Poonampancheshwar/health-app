@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import MenuBar from './MenuBar/MenuBar';
+import AddHealthData from './componets/AddHealthData/AddHealthData';
+import ShoHealthData from './componets/ShoHealthData/ShoHealthData';
+import AnHealthData from './componets/AnHealthData/AnHealthData';
+import {MainContextWrapper} from './Store/mainContext/mainContext';
+
 
 function App() {
+  const [loadComponents, setLoadComponents] = useState(<ShoHealthData/>)
+  
+  const buttonArr = [
+      { id:1, label:'Add-health', btFun : () => {setLoadComponents(<AddHealthData/>)}
+      },
+      { id:2, label:'Show-health', btFun : () => {setLoadComponents(<ShoHealthData/>)} 
+      },
+      { id:3, label:'Analitics-health',btFun : () => {setLoadComponents(<AnHealthData/>)}
+      },
+    ];
+   
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <MainContextWrapper>
+    <div>
+      <MenuBar buttonArr={buttonArr}/>
+      {loadComponents}
     </div>
+    </MainContextWrapper>
   );
 }
 
